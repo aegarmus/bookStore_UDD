@@ -46,3 +46,27 @@ export const createNewBook = async(req, res) => {
         })
     }
 }
+
+export const updateBookById = async(req, res) => {
+    try {
+        const bookID = req.params.id
+        const updatedBook = req.body
+
+        const updateBook = await Book.findOneAndUpdate({ _id: bookID }, updatedBook, { new: true })
+        if(!updateBook) res.status(404).json({message: 'Libro no encontrado', status: 404})
+        
+        res.status(202).json({
+            message: 'Libro Actualizado con Éxito',
+            status: 202,
+            data: updateBook       
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'No pudimos actualizar el libro',
+            status: 500,
+            error
+            }
+        )
+    }
+}
