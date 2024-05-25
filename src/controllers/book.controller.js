@@ -3,6 +3,7 @@ import { Book } from "../models/Book.model.js";
 export const getAllBooks = async(req, res) => {
     try {
         const allBooks = await Book.find()
+
         res.status(200).json({
             message: 'Libros encontrados con éxito',
             status: 200,
@@ -53,13 +54,13 @@ export const updateBookById = async(req, res) => {
         const updatedBook = req.body
 
         const updateBook = await Book.findOneAndUpdate({ _id: bookID }, updatedBook, { new: true })
-        if(!updateBook) res.status(404).json({message: 'Libro no encontrado', status: 404})
+        if(!updateBook) res.status(404).json({message: 'Libro no encontrado', status: 404})//Guard Condition
         
         res.status(202).json({
-            message: 'Libro Actualizado con Éxito',
+            message: `El libro ${updateBook.titulo} fue actualizado con éxito`,
             status: 202,
-            data: updateBook       
-        })
+            data: updateBook,
+        });
 
     } catch (error) {
         res.status(500).json({
@@ -68,5 +69,25 @@ export const updateBookById = async(req, res) => {
             error
             }
         )
+    }
+}
+
+export const deleteBookByID = async(req, res) => {
+    try {
+        const bookID = req.params.id
+
+        const removeBook = await Book.findOneAndDelete({ _id: bookID })
+        if(!removeBook) res.status(404).json({message: 'Libro no encontrado', status: 404})//Guard Condition
+            
+        res.status(202).json({
+            message: `El libro ${removeBook.titulo} ha sido eliminado con éxito`,
+            status: 202,
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "No pudimos Eliminar el libro",
+            status: 500,
+            error
+        })
     }
 }

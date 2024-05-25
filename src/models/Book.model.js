@@ -8,7 +8,7 @@ const bookSchema = new Schema({
     editorial: {type: String, required: true},
     genero: {type: String, required: true},
     precio: {type: Number, required: true},
-    paginas: {type: Number, required: true}
+    paginas: {type: Number, required: true},
 }, {versionKey: false})
 
-export const Book = mongoose.model('Books', bookSchema)
+export const Book = mongoose.model('books', bookSchema)
