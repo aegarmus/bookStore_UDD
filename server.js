@@ -1,7 +1,6 @@
 import express from 'express'
 import bookRouter from './src/routes/book.routes.js'
 
-
 import { db } from './src/config/db.config.js'
 
 import dotenv from 'dotenv'
@@ -10,6 +9,10 @@ dotenv.config()
 
 
 const app = express()
+
+//Middlewares parse Json
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
 
 //Middlewares para rutas

@@ -16,3 +16,33 @@ export const getAllBooks = async(req, res) => {
         })
     }
 }
+
+
+export const createNewBook = async(req, res) => {
+    try {
+        const {titulo, autor, editorial, genero, precio, paginas } = req.body
+
+        const book = new Book({
+            titulo,
+            autor,
+            editorial,
+            genero,
+            precio,
+            paginas
+        })
+
+        const saveBook = await book.save()
+
+        res.status(201).json({
+            message: 'Libro creado con éxito',
+            status: 201,
+            data: saveBook
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al crear el libro',
+            status: 500,
+            error
+        })
+    }
+}
