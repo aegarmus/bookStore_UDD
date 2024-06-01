@@ -1,5 +1,6 @@
 import express from 'express'
 import bookRouter from './src/routes/book.routes.js'
+import userRouter from './src/routes/user.routes.js'
 
 import { db } from './src/config/db.config.js'
 
@@ -16,7 +17,9 @@ app.use(express.urlencoded({extended:true}))
 
 
 //Middlewares para rutas
-app.use('/api/v1', bookRouter)
+app.use("/api/v1", bookRouter);
+
+app.use('/api/v1', userRouter)
 
 
 db()
