@@ -23,4 +23,52 @@ export const getUserByRut = async(req, res) => {
 }
 
 
+export const updateUser = async (req, res) => {
+  try {
+    const userRut = req.params.rut;
+    const updateData = req.body;
+
+    const updateUser = await User.findOneAndUpdate(
+      { rut: userRut },
+      updateData,
+      { new: true }
+    );
+    if (!updateUser) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res
+      .status(202)
+      .json({
+        message: `Usuario ${updateUser.nombre} ${updateUser.apellido} ha sido actualizado con éxito`,
+      });
+  } catch (error) {
+    res.status(500).json({ message: "No pudimos actualizar el usuario" });
+  }
+};
+
+export const deleteUserByRut = async (req, res) => {
+  try {
+    const userRut = req.params.rut;
+
+    const removeUser = await User.findOneAndDelete({ rut: userRut });
+    if (!removeUser) {
+      return res
+        .status(404)
+        .json({ message: "Usuario no encontrado para eliminar" });
+    }
+
+    res
+      .status(202)
+      .json({
+        message: `Usuario ${removeUser.nombre} ${removeUser.apellido} ha sido eliminado con éxito`,
+      });
+  } catch (error) {
+    res.status(500).json({ message: "No pudimos eliminar el usuario" });
+  }
+};
+
+
+
+
 
