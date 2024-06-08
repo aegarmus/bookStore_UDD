@@ -68,7 +68,3 @@ export const deleteUserByRut = async (req, res) => {
   }
 };
 
-
-
-
-

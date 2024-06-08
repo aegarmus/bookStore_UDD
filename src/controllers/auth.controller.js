@@ -83,3 +83,13 @@ export const login = async(req, res) => {
         res.status(401).json({message: 'usuario no autorizado', status: 401, error })
     }
 }
+
+
+export const verifyUser = async(req, res) => {
+    try {
+        const user = await User.findById(req.data.id).select("-password")
+        res.json(user);
+    } catch (error) {
+        return res.status(500).json({message: "No pudimos verficiar a este Usuario"})
+    }
+}
