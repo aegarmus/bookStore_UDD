@@ -85,11 +85,16 @@ export const login = async(req, res) => {
 }
 
 
-export const verifyUser = async(req, res) => {
-    try {
-        const user = await User.findById(req.data.id).select("-password")
-        res.json(user);
-    } catch (error) {
-        return res.status(500).json({message: "No pudimos verficiar a este Usuario"})
+export const verifyUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.data.id).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
-}
+    res.json(user);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "No pudimos verificar a este Usuario", error });
+  }
+};

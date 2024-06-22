@@ -1,19 +1,24 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
 export const authRequire = (req, res, next) => {
-    try {
-        const { authorization } = req.headers
+  try {
+    const { authorization } = req.headers;
 
-        const tokenDecoded = jwt.verify(authorization, process.env.SECRET_KEY)
-        const actualTime = (new Date()/1000)
+    if (!authorization)
+      return res.status(401).json({ message: "No autorizado" });
 
-        if(actualTime > tokenDecoded.exp) return res.status(401).json({message: 'Token expirado :c'})
+    const tokenDecoded = jwt.verify(authorization, process.env.SECRET_KEY);
+    const actualTime = new Date() / 1000;
 
-        req.data = tokenDecoded.data
+    if (actualTime > tokenDecoded.exp)
+      return res.status(401).json({ message: "Token expirado :c" });
 
-    } catch (error) {
-        return res.status(401).json(error)
-    }
+    req.data = tokenDecoded.data;
+  } catch (error) {
+    return res
+      .status(401)
+      .json({ message: "Token inválido o no proporcionado", error });
+  }
 
-    next()
-}
+  next();
+};

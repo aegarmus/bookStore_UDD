@@ -4,6 +4,7 @@ import cors from 'cors'
 import bookRouter from './src/routes/book.routes.js'
 import userRouter from './src/routes/user.routes.js'
 import authRouter from './src/routes/auth.routes.js'
+import transactionRouter from './src/routes/transaction.routes.js'
 
 import { db } from './src/config/db.config.js'
 
@@ -26,6 +27,7 @@ app.use(cors(corsOption))
 app.use('/api/v1', authRouter)
 app.use("/api/v1", bookRouter);
 app.use('/api/v1', userRouter)
+app.use('/api/v1', transactionRouter)
 
 
 db()
