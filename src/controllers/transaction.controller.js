@@ -11,7 +11,7 @@ export const createTransaction = async (req, res) => {
             paymentResult
         })
 
-        const saveTransaction = await Transaction.save()
+        const saveTransaction = await newTransaction.save()
 
         res.status(201).json(saveTransaction)
 
